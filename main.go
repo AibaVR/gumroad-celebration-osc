@@ -142,18 +142,11 @@ func (s *Session) pollGumroad() {
 }
 
 func (s *Session) startPolling() {
-	// Poll once on startup
-	go s.pollGumroad()
-
 	// Start the ticker to poll every minute
 	ticker := time.NewTicker(time.Minute)
-	for {
-		select {
-		case <-ticker.C:
-			go s.pollGumroad()
-		}
+	for ; true; <-ticker.C {
+		go s.pollGumroad()
 	}
-
 }
 
 type ProductListResponse struct {
